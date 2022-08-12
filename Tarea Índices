@@ -1,0 +1,70 @@
+## Índices de Evaluación 
+
+Índice de Whipple
+
+Este indicador, denotado por IW, tiene por objeto medir el nivel de atracción que ejercen uno o dos dígitos en las edades. Aunque la propuesta inicial de Whipple fue para medir las preferencias en las edades terminadas en cero y cinco conjuntamente, el índice se ha adaptado para medir éstas tanto en uno como en dos dígitos cualesquiera.
+La versión más común, la que mide la atracción de los dígitos cero y cinco, bajo el supuesto de que la población varía en forma lineal dentro de los grupos de edades 23-27, 28-32, ..., 58-62, toma la forma siguiente:
+
+$Iw=\frac{5*\sum_{5}^{12}P_{5i}}{\sum_{23}^{62}P_i}*100$
+
+Naciones Unidas propone la escala siguiente:
+valores del índice entre 100 y 105 señalarán datos muy precisos, de 105 a 110 relativamente precisos, de 110 a 125 aproximados, de 125 a 175 malos y de 175 y más, muy malos.
+
+Índice de Myers
+
+El índice de Myers (IM(j)) es uno de los más fáciles de evaluar, mide la preferencia o repulsión en forma individual de cada dígito, así como el nivel de atracción general, al sumar los valores absolutos de los índices individuales de los diez dígitos.
+
+En su cálculo se utilizan edades simples, sobre las que se debe suponer un comportamiento lineal en su variación. Para su construcción se suman todos los efectivos de las edades que terminan en los dígitos del 0 al 9, primero de los individuos de 10 y más años de edad y posteriormente de los que tienen 20 y más. Estas dos series se ponderan y se agregan una con la otra para llegar a una población ficticia, cuya distribución debe ser uniforme cuando no existe preferencia por algún dígito, es decir, en una situación de distribución equitativa de las edades se esperaría que en cada dígito la suma mencionada fuera el 10% de la suma total, es decir
+
+$IM(j)=\frac{S_{1,j}a_{1,j}+S_{2,j}a_{2,j}}{\sum_{0}^{9}S_{1,j}a_{1,j}+S_{2,j}a_{2,j}}*100$
+
+$j=0,1,2,...,9$
+
+$S_{1,j}=\sum_{0}^{8}P_{(10+j)+10i}$
+
+$S_{2,j}=\sum_{0}^{7}P_{(20+j)+10i}$
+
+
+Índice de Naciones Unidas
+
+Este es un indicador que además de mostrar la mala declaración de la edad y la preferencia de dígitos, presenta la omisión diferencial de individuos que se da en ciertas edades y con ello las irregularidades que presentan los datos por sexo
+y edad.
+
+El índice puede ser calculado en poblaciones clasificadas por sexo tanto para edades desplegadas, como para grupos quinquenales y decenales. Su evaluación tiene como base la regularidad de sexos y los cocientes de edades de cada uno de éstos. Su obtención se divide en tres etapas: regularidad de sexos, cociente de edades e índice resumen, cada una con diferentes posibilidades de análisis.
+
+i) Regularidad de Sexos
+La regularidad de sexos se mide a partir de las diferencias sucesivas del índice de masculinidad de la población observada, entre un grupo de edad y el siguiente. El cálculo del índice de masculinidad es: 
+
+$_4IM_x=\frac{_4P_x^m}{_4P_x^f}*100$
+
+donde $_4IM_x$ es el índice de masculinidad del grupo de edad $x, x+4$, ${_4P_x^m}$ y ${_4P_x^f}$ son las poblaciones masculina y femenina en edades cumplidas $x, x+4$ respectivamente.
+
+La medida resumen de este primer indicador está dada por el promedio de la suma de valores absolutos de las primeras diferencias
+
+$_4RS_x=\frac{\sum_{i=1}^{k-2}|4IM_x|}{k-2}$
+
+$x=5,9,...,75$
+
+$_4IM_x=_4P_{x+5}-_4P_x$
+
+ii) Cocientes de Edades
+En los cocientes de edades se relacionan los efectivos de un grupo de edad con la media aritmética de los dos grupos adyacentes, esto es, el total de personas de un determinado grupo de edad, entre la media aritmética de los dos grupos contiguos. 
+
+$_4CE_x=\frac{4P_x}{1/2(_4P_{x-5}+_4P_{x+5})}$
+
+Calculando las desviaciones del indicador respecto a 100 se mide la calidad de la información. Si la hipótesis se cumple el cociente de edades debe ser 100 y las desviaciones próximas a cero, en caso contrario las perturbaciones pueden haber sido causadas por cambios en la fecundidad o por movimientos migratorios. Desviaciones positivas indican exceso de personas y negativas un 
+
+$_4DC_x=_4CE_x-100$
+
+Una medida resumen del indicador es la suma de los valores absolutos de las desviaciones entre el número de desviaciones calculadas
+
+$PDC=\frac{\sum_{i=1}^{k-2}|4DC_{i,x}|}{k-2}$
+
+iii) Indice Resumen
+Combinando los dos índices anteriores se obtiene el de Naciones Unidas:
+
+$INU=3*RS+PDC^H+PDC^M$
+
+Debido a que el indicador no tiene límites
+precisos su interpretación se basa en la experiencia, para lo cual se establece que índices mayores de 40 indican información deficiente, entre 20
+y 40 de calidad intermedia y menores a 20 satisfactoria.
