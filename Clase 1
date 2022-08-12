@@ -1,0 +1,59 @@
+## Clase 1 AD
+
+¿Qué es la demografía? 
+Discusión entre si la demografía es una ciencia o una disciplina. El objeto de estudio son las poblaciones humanas. 
+Es la ciencia social que estudia el movimiento y la dinámica de las poblaciones humanas
+¿Cuáles son los componentes demográficos?
+'''Fecundidad
+'''Migración 
+'''Mortalidad
+¿Cuáles son los principales eventos demográficos?
+'''Nacimientos (entradas)
+'''Emigrantes e inmigrantes (movimientos) 
+'''Muertes (salidas)
+
+Fuentes de datos o fuentes de información 
+'''Censo 
+'''Encuestas 
+'''Estadísiticas vitales (nacimientos, muertes y matrimonios)
+'''Diagrama de Lexis 
+'''Pirámides poblacionales
+'''Índice de masculinidad 
+
+Tipos de análisis en la demografía 
+'''Análisis Transversal (instante) 
+'''Análisis Longitudinal (a través del tiempo)
+
+'''Tasa
+'''Proporciones 
+
+'''Tablas de vida o mortalidad 
+'''Tablas de nupcialidad
+Son tablas etadísticas que describen fenómenos demográficos 
+
+###############################################################
+
+Tabla abreviada o agrupada de mortalidad 
+
+Es una tabla estadística que resume o sintetiza los impactos de los fenómenos demográficos. Se le llama tabla agrupada porque se van agrupando las edades. Importante recordar que hay un tratamiento especial para las edades de 0 a 1 año y para las edades de 85 y más. 
+'''Población total 
+'''Nacimientos 
+'''Defunciones 
+
+Para la información censal se tiene que evaluar la calidad de la información del censo. Para evaluar la información censal en cuanto a su estructura por eddad se emplean los siguientes índices: whipple, naciones unidas y Myers.   
+
+
+Censo de 1980
+
+Índice de Whipple 
+Estima el grado de preferencia hacia los dígitos 0 y 5 d ela población en edades de 23 a 62 años. El supuesto de este índice es la ditribución uniforme en cada una de las ededes individuales. 
+Se calcula como:
+
+$Iw=\frac{\sum_{15}^{12}P5i}{\sum_{23}^{62}Pi}*5*100$
+
+Donde P5i y Pi son las poblaciones censadas que declararon tener las edades cumplidas 5i y i respectivamente.
+Rango de Iw 100 a 104 información precisa 
+105-109 información precisa 
+110-124 aproximada 
+125-174 deficiente 
+175-más muy deficiente 
