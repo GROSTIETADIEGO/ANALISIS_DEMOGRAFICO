@@ -1,0 +1,69 @@
+#Condicionantes
+a=int(input("El numero es: "))
+if a>0:
+    print("Positivo")
+elif a==0:
+    print("Cero")
+else:
+    print("Negativo")
+print("Fin")
+
+#Operadores Lógicos
+resultado = 10<20
+print(resultado)
+
+a=10
+b=16
+c=21
+
+resultado =(a>b)and(b<c)
+print(resultado)
+
+#Operadores aritméticos
+a=0
+a+=5
+a=a+5
+a-=5
+a*=3
+a/=2
+a**=2
+print(a)
+
+#Salidas en Python
+nombre="Diego"
+edad=20
+print(f"Hola mi nombre es {nombre} y tengo {edad} años")
+
+#Funciones integradas
+n=int("-8") #De cadena a entero
+m=float("5") #De cadena a float
+l=str(16) #De número a cadena
+o=bin(10)
+print(o)
+
+#Para valor absoluto la función es abs
+p=abs(n)
+print(p)
+
+#Para redondear
+q=round(a)
+print(q)
+
+#Para interacción con la consola
+a=float(input("Introduce a="))
+b=float(input("Introduce b="))
+c=float(input("Introduce c="))
+
+ecuacion=(a**3*(b**2-2*a*c))/2*b
+print(f"El resultado de la ecuación es {ecuacion}")
+
+#Ejercicio: definir el valor de x, y y z para resolver la ecuación, suponiendo x=12, y=7 y z=5
+
+x=float(input("Introduce x="))
+y=float(input("Introduce y="))
+z=float(input("Introduce z="))
+ecuacion_ejercicio=(y*x**2+y*x+z**2)/(x**3*y**2)
+print(f"El resultado de la ecuación es {ecuacion_ejercicio}")
+redondeo=round(ecuacion_ejercicio)
+print(redondeo)
+
