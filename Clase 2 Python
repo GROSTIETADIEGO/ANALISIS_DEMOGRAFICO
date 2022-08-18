@@ -1,0 +1,28 @@
+precio=int(input("Precio del producto: "))
+if 0<precio<=500:# and
+    print("Caro")
+elif precio<=0:
+    print("Precio incorrecto")
+else:
+    print("Imposible")
+'''Obtener datos de asignación y clasificarlos como niños-jóvenes 0-29, adultos 30-59 y adultos mayores de 60-100
+Además que imprima su grupo de edad según el valor que se asigne e imprimir incorrecto cuando se asignen numeros negativos'''
+
+edad=int(input("Ingresa tu edad por favor: "))
+if 0<edad<=29:
+    print("Niño-Jóven")
+if 30<=edad<=59:
+    print("Adulto")
+if 60<=edad<=100:
+    print("Adulto mayor")
+if edad<0:
+    print("Edad incorrecta")
+elif edad>100:
+    print("Ha superado el limite")
+
+x=float(input("Ingrese x: "))#x=23
+y=float(input("Ingrese y: "))#y=18
+ecuacion_1=x**3 -(5+(3*x**2*y**2)-(x*y+6))
+print(ecuacion_1)
+ecuacion_2=(1/x-3)+(2/x**3+5)
+print(ecuacion_2)
