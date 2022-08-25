@@ -1,0 +1,36 @@
+## Proyecciones
+
+Se relaciona con poblaciones futuras y se define como un resultado
+de un número diverso que se tiene para calcular una población.
+
+Tasa de crecimiento anual
+$TCA=\frac{Pob_{final}-Pob_{inicial}}{Pob_{inicial}}$
+TCA  = (296410000-293657000)/292657000
+TCA
+
+Tasa de crecimiento exponencial
+$Pob_{final}=Pob_{inicial}*\exp{(r*n)}$
+$r=\frac{ln{(Pob_{final}/pob_{inicial})}}{n}$
+
+####################################################################
+
+install.packages("wpp2019")
+library(wpp2019)
+data("pop")
+#codigo de México 484
+datos_mex <- subset(x = pop, pop$country_code == 484)
+#transponer el vector de renglon a uno de columna
+datos_mex <- t(datos_mex)
+#remover las 2 primeras observaciones
+datos_mex <- datos_mex[-c(1,2)]
+datos_mex <- as.numeric(datos_mex)
+#llamar la funcion que se hizo para calcular la tasa de crecimiento en capitulos anteriores
+crec_anual <- function(poblacion){
+  crecimiento <- rep(0,length(poblacion))
+  for (i in 2:length(poblacion)) {
+    crecimiento[i] <- (poblacion[i]-poblacion[i-1])/poblacion[i-1]
+  }
+  return(crecimiento)
+}
+tasas_crec <- crec_anual(poblacion = datos_mex)
+tasas_crec
