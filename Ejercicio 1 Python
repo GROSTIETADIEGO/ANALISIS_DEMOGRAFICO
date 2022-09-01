@@ -1,0 +1,10 @@
+import numpy
+data_mex=[27944.67,32350.59,37771.86,44123.86,51493.56,59607.95,67761.37,75983.49,83943.14,91663.29,98899.85,106005.20,114093.00,121858.30,128932.80]
+print(data_mex)
+
+def crecimiento_anual(poblacion):
+    crecimiento=numpy.tile(0,numpy.size(poblacion)-1)
+    for i in range(1,numpy.size(poblacion)):
+        crecimiento[i-1]=float((poblacion[i]-poblacion[i-1])/poblacion[i-1])
+    print (crecimiento)
+result=crecimiento_anual(data_mex)
