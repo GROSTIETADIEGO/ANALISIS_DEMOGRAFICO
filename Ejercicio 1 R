@@ -1,0 +1,91 @@
+install.packages("ggplot2")
+require(ggplot2)
+
+                  ### Población de México ###
+
+
+### Datos iniciales ###
+
+X<-c(1950,1960,1970,1980,1990,2000)
+Y<-c(25.791017,34.923129,48.225238,66.846833,81.249645,97.483412)
+n<-2
+
+### Cálculos generales ###
+
+x<-(X-1950)/10
+log_Y<-log10(Y)
+reciproco_Y<-1/Y
+
+### Gompertz ###
+
+S1_g<-sum(log_Y[1:2])
+S2_g<-sum(log_Y[3:4])
+S3_g<-sum(log_Y[5:6])
+b2_g<-(S3_g-S2_g)/(S2_g-S1_g)
+b_g<-sqrt(b2_g)
+loga_g<-(S2_g-S1_g)*(b_g-1)/(b2_g-1)^2
+logk_g<-1/n*(S1_g-(b2_g-1)/(b_g-1)*loga_g)
+a_g<-10^loga_g
+k_g<-1/n*(S1_g-(b2_g-1)/(b_g-1)*a_g)
+log_y_estimado<-logk_g+loga_g*b_g^x
+Y_estimado_gompertz<-10^log_y_estimado
+
+### Logístico ###
+
+S1_l<-sum(reciproco_Y[1:2])
+S2_l<-sum(reciproco_Y[3:4])
+S3_l<-sum(reciproco_Y[5:6])
+b2_l<-(S3_l-S2_l)/(S2_l-S1_l)
+b_l<-sqrt(b2_l)
+loga_l<-(S2_l-S1_l)*(b_l-1)/(b2_l-1)^2
+logk_l<-1/n*(S1_l-(b2_l-1)/(b_l-1)*loga_l)
+a_l<-10^loga_l
+k_l<-1/n*(S1_l-(b2_l-1)/(b_l-1)*a_l)
+reciproco_Y_estimado<-logk_l+loga_l*b_l^x
+Y_estimado_logistico<-1/reciproco_Y_estimado
+
+### Proyecciones 2010-2070 ###
+
+X_proyec<-c(2010,2020,2030,2040,2050,2060,2070)
+x_proyeccion<-c(6,7,8,9,10,11,12)
+log_y_proyeccion<-logk_g+loga_g*b_g^x_proyeccion
+Y_proyeccion_gompertz<-10^log_y_proyeccion
+reciproco_Y_proyeccion<-logk_l+loga_l*b_l^x_proyeccion
+Y_proyeccion_logistico<-1/reciproco_Y_proyeccion
+Y_proyeccion<-c(112.336538,126.014024,NA,NA,NA,NA,NA)
+
+### Gráficas ###
+
+Tipo_g1<-c("Real","Real","Real","Real","Real","Real",
+           "Gompertz","Gompertz","Gompertz","Gompertz","Gompertz","Gompertz",
+           "Logistico", "Logistico","Logistico","Logistico","Logistico","Logistico")
+Fecha_g1<-c(X,X,X)
+Grafica_Comparacion<-c(Y,Y_estimado_gompertz,Y_estimado_logistico)
+Comparacion<-data.frame(Fecha=Fecha_g1, Población=Grafica_Comparacion, 
+                        Tipo=Tipo_g1)
+Comparacion
+
+ggplot (Comparacion, aes(x=Fecha_g1, y=Grafica_Comparacion))+
+  geom_point(size =1,aes(color=Tipo_g1))+
+  geom_line(aes(color=Tipo_g1))+
+  theme(axis.title.x=element_text(face="bold",vjust=-0.5,        colour="green",size=rel(1)))+
+  theme(axis.title.y=element_text(face="bold",vjust=-0.5,        colour="blue",size=rel(1)))+
+  ggtitle("Gráfica Población de México")+
+  theme(plot.title=element_text(family="Comic Sans MS",size=rel(1.5),vjust=2,face="bold",color="khaki4",lineheight=2))
+
+Tipo_g2<-c("Real","Real","Real","Real","Real","Real","Real",
+           "Gompertz","Gompertz","Gompertz","Gompertz","Gompertz","Gompertz","Gompertz",
+           "Logistico", "Logistico","Logistico","Logistico","Logistico","Logistico","Logistico")
+Fecha_g2<-c(X_proyec,X_proyec,X_proyec)
+Grafica_Proyeccion<-c(Y_proyeccion,Y_proyeccion_gompertz,Y_proyeccion_logistico)
+Proyeccion<-data.frame(Fecha=Fecha_g2, Población=Grafica_Proyeccion, 
+                        Tipo=Tipo_g2)
+Proyeccion
+
+ggplot (Proyeccion, aes(x=Fecha_g2, y=Grafica_Proyeccion))+
+  geom_point(size =1,aes(color=Tipo_g2))+
+  geom_line(aes(color=Tipo_g2))+
+  theme(axis.title.x=element_text(face="bold",vjust=-0.5,        colour="green",size=rel(1)))+
+  theme(axis.title.y=element_text(face="bold",vjust=-0.5,        colour="blue",size=rel(1)))+
+  ggtitle("Gráfica Proyección Población de México")+
+  theme(plot.title=element_text(family="Comic Sans MS",size=rel(1.5),vjust=2,face="bold",color="khaki4",lineheight=2))
