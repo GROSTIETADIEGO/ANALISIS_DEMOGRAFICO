@@ -1,0 +1,27 @@
+fecha<-(seq(1950,2000, by=10))
+Y<-c(8.31,10.39,12.66,14.81,17.17,19.27)
+x<-(fecha-1950)/10
+log_y<-log10(Y)
+y_logis<-1/Y
+
+S1_l<-sum(y_logis[1:2])
+S2_l<-sum(y_logis[3:4])
+S3_l<-sum(y_logis[5:6])
+
+b<-sqrt((S3_l-S2_l)/(S2_l-S1_l))
+b2<-b^2
+a_log<-(S2_l-S1_l)*(b-1)/(b2-1)^2
+k_log<-1/2*(S1_l-(b2-1)/(b-1)*a_log)
+
+y1_logis<-k_log+a_log*b^x
+ajuste_logis<-1/y1_logis
+
+data.frame(Fecha=fecha, x, Población=Y,Logístico=ajuste_logis)
+
+y2010_logis<-k_log+a_log*b^6
+ajuste2010_logis<-1/y2010_logis
+ajuste2010_logis
+
+y2020_logis<-k_log+a_log*b^7
+ajuste2020_logis<-1/y2020_logis
+ajuste2020_logis
