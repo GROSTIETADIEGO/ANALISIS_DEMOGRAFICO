@@ -1,0 +1,28 @@
+Años<-c(1960,1970,1980,1990,2000,2010,2020)
+Jalisco_Poblacion<-c(2443261,3296586,4371998,5302689,6322002,
+                     7350682,8348151)
+crec_anual <- function(poblacion){
+  crecimiento <- rep(0,length(poblacion))
+  for (i in 2:length(poblacion)) {
+    crecimiento[i] <- (poblacion[i]-poblacion[i-1])/poblacion[i-1]
+  }
+  return(crecimiento)
+}
+tasa_crecimiento_anual<-crec_anual(Jalisco_Poblacion)
+tasa_crecimiento_anual
+
+pob2030<-Jalisco_Poblacion[7]*(1+tasa_crecimiento_anual[7])
+pob2030
+
+crec_exponencial <- function(poblacion){
+  crecimiento <- rep(0,length(poblacion))
+  for (i in 2:length(poblacion)) {
+    crecimiento[i] <- log(poblacion[i]/poblacion[i-1])
+  }
+  return(crecimiento)
+}
+tasa_crecimiento_exponencial<-crec_exponencial(Jalisco_Poblacion)
+tasa_crecimiento_exponencial
+
+pob2030<-Jalisco_Poblacion[7]*exp(tasa_crecimiento_anual[7])
+pob2030
