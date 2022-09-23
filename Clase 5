@@ -1,0 +1,65 @@
+ ###Proyecciones con el método de componentes demográficos### 
+
+Este método se basa en los principales componentes demográfiocs: 
+fecundidad, migración y mortalidad. Se tiene la ventaja de realizar
+proyecciones por sexo y por grupos de edad.
+
+1)Población inicial por sexo y grupos de edad
+2)Tasas con natalidad por edad
+3)proporción de sexos al nacer 
+4)Tasas de supervivencia por sexo y grupos de edad
+5)Tasas de mkigración por edad y sexo 
+
+Los cálculos se pueden hacer con grupos de 1, 5 o 10 años de edad.
+Una vez que se eligierón los grupos de edad, los demás componentes 
+mencionados en los cinco puntos anteriores quedarán definidos en 
+base al grupo de edad previamente establecido. 
+
+¿Cómo se calculan las proyecciones con componentes demográficos?
+1) Obtener la información refernte a la población inicial (compknentes demográficos)
+2) Se calculan los sobrevivientes por cada grupo de edad (tasas de supervivencia en una tabla de mortalidad)
+3) Ajuste a los sobrevivientes con base a la tasa neta de migración 
+4) Se utilizan las tasas de fecundidad para saber o conocer a través del número
+de nacimientos las entradas que tendran los primeros grupos quinquenales 
+
+Supuestos para la proyección con componentes demográficos:
+  
+Uno de los supuestos en este método es que la tasa de fecundidad, migración y mortalidad se 
+mantienen cosntantes a través del tiempo
+
+gpoed <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+           "35-39", "40-44", "45-49", "50-54", "55-59", "60-64",
+           "65-69", "70-74","75-79", "80-84","85+")
+
+hom00 <- c(31574,40872,55079,52893,48265,47223,43846,
+           46824,47437,44390,39005,32745,34638,
+           27270,21027,10548,4552,3553)
+
+muj00<- c(29801,38804,52421,50913,46414,47241,45519,49831,
+          52029,50710,46782,41442,48134,42193,39856,28605,
+          13640,13863)
+  
+Lxhom<- c(496698,492883,491945,490385,486328,480328,473203,463513,
+          447423,423083,392365,355228,309020,254560,194300,134095,
+          79448,42945)
+
+Lxmuj <- c(497620,494858,494263,493543,492425,491010,488890,485578,
+           480693,472680,461025,444545,423403,394603,348835,
+           282525,199508,138878)
+
+mighom <-c(-.000728, -0.001125, -.001416,-.002042,-.001471, -.001546,-.001140,
+           -.001516,-.001560,-.001284,-.001282,-.000458,-.000635,
+           -.000660,-.000999,-.001043,-.001098, -.001092)
+
+migmuj <-c(-.000906, -.000954,-.001202,-.001395,-.002241,
+           -.001905, -.001714,-.001465, -.001807, -.001775,-.001026,
+           -.000748, -.000706,-.000901,-.000828, -.000909,-.000587,
+           -.000505)
+
+hombres <- data.frame (gpoed, hom00, Lxhom, mighom)
+
+mujeres <- data.frame (gpoed, muj00, Lxmuj, migmuj)
+
+Cálculo de la tasa de supervivencia 
+
+SL10_h/SL5_h=491945/492883
