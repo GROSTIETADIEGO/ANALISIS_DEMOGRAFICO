@@ -1,0 +1,239 @@
+gpoed <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+           "35-39", "40-44", "45-49", "50-54", "55-59", "60-64",
+           "65-69", "70-74","75-79", "80-84","85+")
+hom00 <- c(31574,40872,55079,52893,48265,47223,43846,
+           46824,47437,44390,39005,32745,34638,
+           27270,21027,10548,4552,3553)
+muj00<- c(29801,38804,52421,50913,46414,47241,45519,49831,
+          52029,50710,46782,41442,48134,42193,39856,28605,
+          13640,13863)
+Lxhom<- c(496698,492883,491945,490385,486328,480328,473203,463513,
+          447423,423083,392365,355228,309020,254560,194300,134095,
+          79448,42945)
+Lxmuj <- c(497620,494858,494263,493543,492425,491010,488890,485578,
+           480693,472680,461025,444545,423403,394603,348835,
+           282525,199508,138878)
+mighom <-c(-.000728, -0.001125, -.001416,-.002042,-.001471, -.001546,-.001140,
+           -.001516,-.001560,-.001284,-.001282,-.000458,-.000635,
+           -.000660,-.000999,-.001043,-.001098, -.001092)
+migmuj <-c(-.000906, -.000954,-.001202,-.001395,-.002241, 
+           -.001905, -.001714,-.001465, -.001807, -.001775,-.001026, 
+           -.000748, -.000706,-.000901,-.000828, -.000909,-.000587,
+           -.000505)
+hombres <- data.frame (gpoed, hom00, Lxhom, mighom)
+mujeres <- data.frame (gpoed, muj00, Lxmuj, migmuj)
+fec <- c(.025671,.087021,.084884,.054263,.019707, .004805, .000177)
+
+######### tasa de supervivencia
+tsuph<-numeric(18)
+tsuph[1] <- Lxhom [1]/500000
+#tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+for(i in 1:length(tsuph)){
+  tsuph[i+1]<-((Lxhom[i+1]/Lxhom[i]))
+} 
+tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+tsuph <- na.omit(tsuph)
+
+#tasa supervivencia mujeres
+tsupm<-numeric(18)
+tsupm[1] <- Lxmuj [1]/500000
+for(i in 1:length(tsuph)){
+  tsupm[i+1]<-((Lxmuj[i+1]/Lxmuj[i]))
+} 
+tsupm[18] <- Lxmuj [18]/(Lxmuj [17]+Lxmuj [18])
+tsupm <- na.omit(tsupm)
+
+
+##### una vez que se tiene la tasa de supervivencia se calcula el número de sobrevivientes
+#multiplicando la población en el año 2000 por tasa de sobrevivientes 
+
+
+####sobrevivientes en n2005
+sobh05<-numeric(18)
+
+for(i in 1:length(sobh05)){
+  sobh05[i+1]<-((hom00[i]*tsuph[i+1]))
+} 
+sobh05[18]<-(hom00[17]+hom00[18])*tsuph[18]
+
+
+#### mujeres
+sobm05<-numeric(18)
+
+for(i in 1:length(sobm05)){
+  sobm05[i+1]<-((muj00[i]*tsupm[i+1]))
+} 
+sobm05[18]<-(muj00[17]+muj00[18])*tsupm[18]
+
+
+
+####### hasta aquí se retoma la mortalidad para la proyección
+### el siguiente paso es retomar el componente de la migración 
+#### y se calcula los sobrevivientes por la tasa especifica de migración 
+## más los sobrevivientes
+#######################################################
+#### ajuste migración hombres
+hom05<-numeric(18)
+for(i in 1:length(hom05)){
+  hom05[i]<-((sobh05[i])+(sobh05[i]*mighom[i]*5))
+} 
+
+##### mujeres
+muj05<-numeric(18)
+for(i in 1:length(muj05)){
+  muj05[i]<-((sobm05[i])+(sobm05[i]*migmuj[i]*5))
+} 
+#### en el caso del primer grupo  de edad de l a tasa de sobrevivencia
+# hay que calcular los nacimientos del año 2000 al 2005, para eso
+#se utilizan las tasas de fecundidad entonces se multiplica la tasa de
+#fecundidad por la población femenina en cada uno de los grupos de edad
+
+nac00 <- sum(muj00[4:10]*fec [1:7]) # número de nacimientos con la pob del 2000
+nac05 <- sum(muj05[4:10]*fec [1:7])# número de nacimiento con la pob del 2005 (proyectada)
+nnac <- c(nac00,nac05)
+nactot <- mean(nnac)*5# 5 años
+### de los nacimientos totales hay que calcular la proporción de 
+#hombres que se calcula con 105 hombres por cada 100 mujeres
+proph <- 105/205
+propm<- 1-proph
+nach <- nactot*proph
+nacm <- nactot*propm
+nach05<-nach*tsuph[1]
+nacm05<-nacm*tsupm[1]
+sobh05[1]<-nach05#### agregar primer dato de la proyección 
+#2005
+sobm05[1]<-nacm05
+
+
+#######################################################
+#### ajuste migración hombres
+hom05<-numeric(18)
+#sobh05[1] <- Lxmuj [1]/500000
+for(i in 1:length(hom05)){
+  hom05[i]<-((sobh05[i])+(sobh05[i]*mighom[i]*5))
+} 
+##### mujeres
+muj05<-numeric(18)
+for(i in 1:length(muj05)){
+  muj05[i]<-((sobm05[i])+(sobm05[i]*migmuj[i]*5))}
+
+proy05<-data.frame(hom05,muj05)
+  
+  gpoed <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+             "35-39", "40-44", "45-49", "50-54", "55-59", "60-64",
+             "65-69", "70-74","75-79", "80-84","85+")
+  hom00 <- hom05
+  muj00<- muj05
+  Lxhom<- c(496698,492883,491945,490385,486328,480328,473203,463513,
+            447423,423083,392365,355228,309020,254560,194300,134095,
+            79448,42945)
+  Lxmuj <- c(497620,494858,494263,493543,492425,491010,488890,485578,
+             480693,472680,461025,444545,423403,394603,348835,
+             282525,199508,138878)
+  mighom <-c(-.000728, -0.001125, -.001416,-.002042,-.001471, -.001546,-.001140,
+             -.001516,-.001560,-.001284,-.001282,-.000458,-.000635,
+             -.000660,-.000999,-.001043,-.001098, -.001092)
+  migmuj <-c(-.000906, -.000954,-.001202,-.001395,-.002241, 
+             -.001905, -.001714,-.001465, -.001807, -.001775,-.001026, 
+             -.000748, -.000706,-.000901,-.000828, -.000909,-.000587,
+             -.000505)
+  hombres <- data.frame (gpoed, hom00, Lxhom, mighom)
+  mujeres <- data.frame (gpoed, muj00, Lxmuj, migmuj)
+  fec <- c(.025671,.087021,.084884,.054263,.019707, .004805, .000177)
+  
+  ######### tasa de supervivencia
+  tsuph<-numeric(18)
+  tsuph[1] <- Lxhom [1]/500000
+  #tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+  for(i in 1:length(tsuph)){
+    tsuph[i+1]<-((Lxhom[i+1]/Lxhom[i]))
+  } 
+  tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+  tsuph <- na.omit(tsuph)
+  
+  #tasa supervivencia mujeres
+  tsupm<-numeric(18)
+  tsupm[1] <- Lxmuj [1]/500000
+  for(i in 1:length(tsuph)){
+    tsupm[i+1]<-((Lxmuj[i+1]/Lxmuj[i]))
+  } 
+  tsupm[18] <- Lxmuj [18]/(Lxmuj [17]+Lxmuj [18])
+  tsupm <- na.omit(tsupm)
+  
+  
+  ##### una vez que se tiene la tasa de supervivencia se calcula el número de sobrevivientes
+  #multiplicando la población en el año 2000 por tasa de sobrevivientes 
+  
+  
+  ####sobrevivientes en n2005
+  sobh05<-numeric(18)
+  
+  for(i in 1:length(sobh05)){
+    sobh05[i+1]<-((hom00[i]*tsuph[i+1]))
+  } 
+  sobh05[18]<-(hom00[17]+hom00[18])*tsuph[18]
+  
+  
+  #### mujeres
+  sobm05<-numeric(18)
+  
+  for(i in 1:length(sobm05)){
+    sobm05[i+1]<-((muj00[i]*tsupm[i+1]))
+  } 
+  sobm05[18]<-(muj00[17]+muj00[18])*tsupm[18]
+  
+  
+  
+  ####### hasta aquí se retoma la mortalidad para la proyección
+  ### el siguiente paso es retomar el componente de la migración 
+  #### y se calcula los sobrevivientes por la tasa especifica de migración 
+  ## más los sobrevivientes
+  #######################################################
+  #### ajuste migración hombres
+  hom05<-numeric(18)
+  for(i in 1:length(hom05)){
+    hom05[i]<-((sobh05[i])+(sobh05[i]*mighom[i]*5))
+  } 
+  
+  ##### mujeres
+  muj05<-numeric(18)
+  for(i in 1:length(muj05)){
+    muj05[i]<-((sobm05[i])+(sobm05[i]*migmuj[i]*5))
+  } 
+  #### en el caso del primer grupo  de edad de l a tasa de sobrevivencia
+  # hay que calcular los nacimientos del año 2000 al 2005, para eso
+  #se utilizan las tasas de fecundidad entonces se multiplica la tasa de
+  #fecundidad por la población femenina en cada uno de los grupos de edad
+  
+  nac00 <- sum(muj00[4:10]*fec [1:7]) # número de nacimientos con la pob del 2000
+  nac05 <- sum(muj05[4:10]*fec [1:7])# número de nacimiento con la pob del 2005 (proyectada)
+  nnac <- c(nac00,nac05)
+  nactot <- mean(nnac)*5# 5 años
+  ### de los nacimientos totales hay que calcular la proporción de 
+  #hombres que se calcula con 105 hombres por cada 100 mujeres
+  proph <- 105/205
+  propm<- 1-proph
+  nach <- nactot*proph
+  nacm <- nactot*propm
+  nach05<-nach*tsuph[1]
+  nacm05<-nacm*tsupm[1]
+  sobh05[1]<-nach05#### agregar primer dato de la proyección 
+  #2005
+  sobm05[1]<-nacm05
+  sobh05
+  
+  #######################################################
+  #### ajuste migración hombres
+  hom05<-numeric(18)
+  #sobh05[1] <- Lxmuj [1]/500000
+  for(i in 1:length(hom05)){
+    hom05[i]<-((sobh05[i])+(sobh05[i]*mighom[i]*5))
+  } 
+  ##### mujeres
+  muj05<-numeric(18)
+  for(i in 1:length(muj05)){
+    muj05[i]<-((sobm05[i])+(sobm05[i]*migmuj[i]*5))
+  }   
+  
+  proy10<-data.frame(hom05,muj05)
+  
