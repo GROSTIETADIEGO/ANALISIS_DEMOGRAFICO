@@ -1,0 +1,76 @@
+Lxhom<- c(496698,492883,491945,490385,486328,480328,473203,463513,
+          447423,423083,392365,355228,309020,254560,194300,134095,
+          79448,42945)
+Lxmuj <- c(497620,494858,494263,493543,492425,491010,488890,485578,
+           480693,472680,461025,444545,423403,394603,348835,
+           282525,199508,138878)
+edomex<-data.frame(read.csv("Edomex.csv"))
+hombres <- data.frame (edomex$Gpo_Edad, edomex$Población_H_2020, Lxhom, edomex$Migración_H_2020)
+mujeres <- data.frame (edomex$Gpo_Edad, edomex$Población_M_2020, Lxmuj, edomex$Migración_M_2020)
+fec <- c(edomex$Fecundidad)
+
+######### tasa de supervivencia
+tsuph<-numeric(18)
+tsuph[1] <- Lxhom [1]/500000
+#tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+for(i in 1:length(tsuph)){
+  tsuph[i+1]<-((Lxhom[i+1]/Lxhom[i]))
+} 
+tsuph[18] <- Lxhom [18]/(Lxhom [17]+Lxhom [18])
+tsuph <- na.omit(tsuph)
+
+#tasa supervivencia mujeres
+tsupm<-numeric(18)
+tsupm[1] <- Lxmuj [1]/500000
+for(i in 1:length(tsuph)){
+  tsupm[i+1]<-((Lxmuj[i+1]/Lxmuj[i]))
+} 
+tsupm[18] <- Lxmuj [18]/(Lxmuj [17]+Lxmuj [18])
+tsupm <- na.omit(tsupm)
+
+
+####sobrevivientes en n2005
+sobh05<-numeric(18)
+
+for(i in 1:length(sobh05)){
+  sobh05[i+1]<-((edomex$Población_H_2020[i]*tsuph[i+1]))
+} 
+sobh05[18]<-(edomex$Población_H_2020[17]+edomex$Población_H_2020[18])*tsuph[18]
+
+
+#### mujeres
+sobm05<-numeric(18)
+
+for(i in 1:length(sobm05)){
+  sobm05[i+1]<-((edomex$Población_M_2020[i]*tsupm[i+1]))
+} 
+sobm05[18]<-(edomex$Población_M_2020[17]+edomex$Población_M_2020[18])*tsupm[18]
+
+##### hombres
+hom05<-numeric(18)
+for(i in 1:length(hom05)){
+  hom05[i]<-((sobh05[i])+(sobh05[i]*edomex$Tasa_Migración_H[i]*5))
+} 
+
+##### mujeres
+muj05<-numeric(18)
+for(i in 1:length(muj05)){
+  muj05[i]<-((sobm05[i])+(sobm05[i]*edomex$Tasa_Migración_M[i]*5))
+} 
+
+pob_2025<-data.frame(hom05,muj05)
+
+nac00 <- sum(edomex$Población_M_2020[4:10]*fec [4:10]) # número de nacimientos con la pob del 2000
+nac05 <- sum(muj05[4:10]*fec [4:10])# número de nacimiento con la pob del 2005 (proyectada)
+nnac <- c(nac00,nac05)
+nactot <- mean(nnac)*5# 5 años
+
+proph <- 105/205
+propm<- 1-proph
+nach <- nactot*proph
+nacm <- nactot*propm
+nach05<-nach*tsuph[1]
+nacm05<-nacm*tsupm[1]
+sobh05[1]<-nach05#### agregar primer dato de la proyección 
+#2005
+sobm05[1]<-nacm05
