@@ -1,0 +1,13 @@
+install.packages("openxlsx")
+require(openxlsx)
+library(openxlsx)
+
+wb1<-createWorkbook()
+addWorksheet(wb1,sheetName = "años")
+x<-c(1:10)
+writeData(wb1,"años",x)
+saveWorkbook(wb1,file = "Ejercicio.xlsx",overwrite = T)
+read.xlsx("Ejercicio.xlsx")
+openXL(wb1)
+openxlsx.excelApp
+options('openxlsx.excelApp')
