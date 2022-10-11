@@ -1,0 +1,13 @@
+poblacion<-read.csv(file.choose())
+hogares<-read.csv(file.choose())
+poblacion$ï..folioviv
+idp<-substr(poblacion$ï..folioviv, star=1, stop=2)
+idh<-substr(hogares$ï..folioviv, star=1, stop=2)
+base<-merge(poblacion,hogares, by="ï..folioviv")
+poblacion<-cbind.data.frame(idp,poblacion)
+hogares<-cbind.data.frame(idh,hogares)
+
+
+
+npob<-subset(poblacion,idp==60)
+nhog<-subset(hogares,idh==60)
