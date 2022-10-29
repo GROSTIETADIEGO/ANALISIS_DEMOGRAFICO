@@ -1,0 +1,29 @@
+[21/10 21:45] Diego Rodolfo Gorostieta Ortega
+install.packages("dplyr")
+require(dplyr)
+coe1<-read.csv("ENOEN_COE1T222.csv")
+sdem<-read.csv("ENOEN_SDEMT222.csv")
+coe1sdem<-merge(coe1,sdem)
+#Edomex
+base<-coe1sdem %>%
+  as_tibble() %>% 
+  filter(ent==15)%>%
+  filter(sex==2)%>%
+  filter(eda>=30 & eda<=59)%>%
+  filter(p1a1==1)%>%
+  mutate(conyugal=case_when(e_con==1 | e_con==5 ~ "unido",
+                            e_con==2 | e_con==3 | e_con==4 ~ "alguna vez unido",
+                            e_con==6 ~ "nunca unido",
+                            e_con==9 ~ "no se sabe"))%>%
+  mutate(jornada_laboral=case_when(dur9c<=4 ~ "menos de 35 horas",
+                                   dur9c==5~"de 35 a 39 horas",
+                                   dur9c==6~"de 40 a 48 horas",
+                                   dur9c>=7 & dur9c<=8~"mas de 48 horas"))%>%
+  select(n_pro_viv,sex,conyugal,jornada_laboral,ent)%>%
+  mutate(mean(coe1sdem$ingocup))%>%
+  mutate(median(coe1sdem$ingocup))%>%
+  mutate(mean(coe1sdem$eda))%>%
+  mutate(median(coe1sdem$eda))
+write.csv(base, "BaseEdomex.csv")
+summarise(media=mean(coe1sdem$ingocup), mediana=median(coe1sdem$ingocup))
+
