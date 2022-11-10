@@ -1,0 +1,37 @@
+install.packages("dplyr")
+require(dplyr)
+install.packages("questionr")
+require(questionr)
+
+base<-read.csv(file.choose())
+
+base1<-base%>%
+as_tibble()%>%
+filter(ent==15 & clase1==1)%>%
+mutate(gpo_edad=case_when(eda>=15 & eda<=19 ~ 1,
+eda>=20 & eda<=24 ~ 2,
+eda>=25 & eda<=29 ~ 3,
+eda>=30 & eda<=34 ~ 4,
+eda>=35 & eda<=39 ~ 5,
+eda>=40 & eda<=44 ~ 6,
+eda>=45 & eda<=49 ~ 7,
+eda>=50 & eda<=54 ~ 8,
+eda>=55 & eda<=59 ~ 9,
+eda>=60 & eda<=64 ~ 10,
+eda>=65 & eda<=69 ~ 11,
+eda>=70 & eda<=74 ~ 12,
+eda>=75 & eda<=79 ~ 13,
+eda>=80 & eda<=84 ~ 14,
+eda>=85 & eda<=89 ~ 15,
+eda>=90 & eda<=95 ~ 16,))%>%
+select(ent,clase1,gpo_edad,fac_tri)
+
+
+base2<-data.frame(wtd.table(base1$gpo_edad,weights = base1$fac_tri))
+poblacion<-c(1476665,1415159,1367527,1283264,1254296,1197089,1145882,
+1007077,795711,661100,475398,330905,212562,130480,71307)
+TPE<-numeric(length(poblacion))
+for (i in 1:length(poblacion)) {
+TPE[i]<-base2$Freq[i]/poblacion[i]*100
+}
+TPE
